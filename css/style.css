@@ -56,39 +56,23 @@ a {
   background-position: center;
   transition: all 1s ease-in;
 }
-div.slide:nth-of-type(1) {
-  background-image: url("../assets/img/slideshow-desktop/1.png");
-}
-/* div.slide:nth-of-type(2) {
-  background-image: url("../assets/img/slideshow-desktop/2.png");
-} */
-div.slide:nth-of-type(2) {
-  background-image: url("../assets/img/slideshow-desktop/3.png");
-}
-div.slide:nth-of-type(3) {
-  background-image: url("../assets/img/slideshow-desktop/4.png");
-}
-
 .slide.active {
   opacity: 1;
 }
-#hero h2:hover {
-  font-variation-settings: "wght" 800;
-  transition: all 1s ease-in-out;
+div.slide:nth-of-type(1) {
+  background-image: url("../assets/img/slideshow-desktop/1.png");
 }
-#jokubas {
-  position: relative;
-  text-align: left;
+div.slide:nth-of-type(2) {
+  background-image: url("../assets/img/slideshow-desktop/2.png");
 }
-#jokubas::after {
-  content: "_";
-  position: absolute;
-  bottom: 85%;
-  right: 42.5%;
-  scale: 0.8;
+div.slide:nth-of-type(3) {
+  background-image: url("../assets/img/slideshow-desktop/3.png");
+}
+div.slide:nth-of-type(4) {
+  background-image: url("../assets/img/slideshow-desktop/4.png");
 }
 
-#hero .container {
+#hero-text {
   position: absolute;
   z-index: 2;
   color: var(--sage);
@@ -96,8 +80,42 @@ div.slide:nth-of-type(3) {
   opacity: 1;
   user-select: none;
 }
+#hero-text h2 {
+  font-variation-settings: "wght" 400;
+  font-weight: 400;
+  font-variant-ligatures: discretionary-ligatures;
+  line-height: 1;
+  margin: 0.5% 0 0 2.5%;
+  padding-bottom: -50%;
+  text-align: center;
+  transition: font-variation-settings 0.4s ease-in-out;
+}
+#hero h2#jokubas:hover {
+  font-variation-settings: "wght" 600;
+  transition: font-variation-settings 0.4s ease-in-out;
+}
+#hero h2#staniulis:hover {
+  font-variation-settings: "wght" 565;
+  transition: font-variation-settings 0.4s ease-in-out;
+}
+#hero-text #jokubas {
+  position: relative;
+  text-align: left;
+}
+#jokubas::after {
+  content: "_";
+  position: absolute;
+  bottom: 90%;
+  right: 44.5%;
+  scale: 0.6;
+}
+#hero-text #staniulis {
+  position: relative;
+  text-align: right;
+  margin-left: 2.1%;
+}
 
-#hero .container ul {
+/* #hero .container ul {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,19 +125,11 @@ div.slide:nth-of-type(3) {
 }
 #hero .container ul li {
   display: inline-block;
-  font-size: max(1.2vw, 20px);
+  font-size: max(20px);
   padding: 0 20px;
 }
 
 #hero .container ul li a {
   font-family: "unbounded", serif;
 }
-
-#hero-text h2 {
-  font-variation-settings: "wght" 400;
-  font-weight: 400;
-  font-variant-ligatures: discretionary-ligatures;
-  font-size: max(5.5vw, 75px);
-  margin: 0;
-  text-align: center;
-}
+*/
