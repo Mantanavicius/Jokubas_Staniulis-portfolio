@@ -1,15 +1,14 @@
-/////////////////////////////////////
 function animateGrain() {
-  const turbulence = document.querySelector("feTurbulence");
-  const fps = 20;
-  function animate() {
-    const frequency = 7 + Math.random(); // Adjust the range as needed
-    turbulence.setAttribute("baseFrequency", frequency);
-    setTimeout(() => {
-      requestAnimationFrame(animate);
-    }, 1000 / fps);
+  const turbulenceElement = document.querySelector("feTurbulence");
+  const framesPerSecond = 20;
+
+  function animateTurbulence() {
+    const frequency = 7 + Math.random();
+    turbulenceElement.setAttribute("baseFrequency", `${frequency} ${frequency}`);
+    requestAnimationFrame(animateTurbulence);
   }
-  animate();
+
+  animateTurbulence();
 }
 animateGrain();
 ///////////////////////////////////////
@@ -17,12 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let slides = document.querySelectorAll(".slide");
   let currentSlide = 0;
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("active");
-      if (i === index) {
-        slide.classList.add("active");
-      }
+  function displaySlide(slideIndex) {
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("active", index === slideIndex);
     });
   }
 
@@ -124,22 +120,20 @@ function menu() {
 }
 menu();
 window.addEventListener("resize", menu);
-///////////////////////////////////////
 function resizeMenuText() {
-  const parentElement = document.querySelector("#hero-menu");
-  const textElements = document.querySelectorAll(
-    "#hero .menu li a:not(.slash)"
-  );
-  const slashes = document.querySelectorAll(".slash");
+  const menuElement = document.querySelector("#hero-menu");
+  const menuItemLinks = document.querySelectorAll("#hero .menu li a:not(.slash)");
+  const menuSlashes = document.querySelectorAll(".slash");
 
-  const parentHeight = parentElement.offsetHeight;
+  const menuElementHeight = menuElement.offsetHeight;
 
-  for (let textElement of textElements) {
-    textElement.style.fontSize = parentHeight / 1.37 + "px";
-  }
-  for (let slash of slashes) {
-    slash.style.fontSize = parentHeight / 1.2 + "px";
-  }
+  menuItemLinks.forEach(link => {
+    link.style.fontSize = `${menuElementHeight / 1.37}px`;
+  });
+
+  menuSlashes.forEach(slash => {
+    slash.style.fontSize = `${menuElementHeight / 1.2}px`;
+  });
 }
 resizeMenuText();
 window.addEventListener("resize", resizeMenuText);
