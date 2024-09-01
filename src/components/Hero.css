@@ -1,0 +1,87 @@
+#hero {
+  --hero-transition: font-variation-settings 0.4s ease-in-out;
+  --menu-transition: font-variation-settings 0.3s ease-in-out;
+
+  h2 {
+    font-variation-settings: "wght" 400;
+    font-variant-ligatures: discretionary-ligatures;
+    line-height: 1;
+    margin: 0.5% 0 0 2.5%;
+    transition: var(--hero-transition);
+
+    span {
+      position: absolute;
+      bottom: 60%;
+      right: 46%;
+      transition: right 0.4s ease-in-out;
+    }
+
+    &:hover {
+      transition: var(--hero-transition);
+    }
+  }
+  #jokubas:hover {
+    font-variation-settings: "wght" 600;
+
+    span {
+      right: 44.5%;
+      transition: right 0.4s ease-in-out;
+    }
+  }
+
+  #staniulis:hover {
+    font-variation-settings: "wght" 565;
+  }
+
+  .menu {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    li {
+      list-style-type: none;
+
+      &:nth-of-type(2) {
+        left: 22.5%;
+      }
+      &:nth-of-type(3) {
+        left: 27.9%;
+        width: 45%;
+        text-align: center;
+        position: absolute;
+      }
+      &:nth-of-type(4) {
+        left: 76.25%;
+      }
+
+      a {
+        font-variation-settings: "wght" 200;
+        transition: var(--menu-transition);
+
+        &:not(.slash):hover {
+          font-variation-settings: "wght" 450;
+          transition: var(--menu-transition);
+        }
+      }
+    }
+    #showreel {
+      font-variation-settings: "wght" 400;
+      letter-spacing: 0.1em;
+
+      &:hover {
+        font-variation-settings: "wght" 700;
+      }
+    }
+
+    .slash {
+      font-family: "norman-variable", sans-serif;
+      font-weight: 800;
+      font-variation-settings: "wght" 800;
+      position: absolute;
+      display: block;
+    }
+  }
+}

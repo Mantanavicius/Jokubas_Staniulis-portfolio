@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Showreel",
+    "type": "Showreel",
+    "team": "• Jokūbas Staniulis",
+    "thumbnail": "src/assets/img/thumbails/cinematography_showreel_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_showreel_hover.png"
+  },
+  {
+    "title": "A bite at the cherry",
+    "type": "Music video",
+    "team": "• Jokūbas Staniulis and others",
+    "thumbnail": "src/assets/img/thumbails/cinematography_abiteatthecherry_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_biteatthecherry_hover.png"
+  },
+  {
+    "title": "Apraiška",
+    "type": "Short film",
+    "team": "• Jokūbas Staniulis and others",
+    "thumbnail": "src/assets/img/thumbails/cinematography_apraiska_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_apraiska_hover.png"
+  },
+  {
+    "title": "Kali kali",
+    "type": "Music video",
+    "team": "• Jokūbas Staniulis and others",
+    "thumbnail": "src/assets/img/thumbails/cinematography_kalikali_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_kalikali_hover.png"
+  },
+  {
+    "title": "LKL kurjeris",
+    "type": "Promotional video",
+    "team": "• Jokūbas Staniulis and others",
+    "thumbnail": "src/assets/img/thumbails/cinematography_lklkurjeris_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_lklkurjeris_hover.png"
+  },
+  {
+    "title": "LKL ofisas",
+    "type": "Promotional video",
+    "team": "• Jokūbas Staniulis and others",
+    "thumbnail": "src/assets/img/thumbails/cinematography_lklofisas_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_lklofisas_hover.png"
+  },
+  {
+    "title": "Shallow",
+    "type": "Something",
+    "team": "• Jokūbas Staniulis",
+    "thumbnail": "src/assets/img/thumbails/cinematography_oxford_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_oxford_hover.png"
+  },
+  {
+    "title": "Showreel",
+    "type": "Showreel",
+    "team": "• Jokūbas Staniulis",
+    "thumbnail": "src/assets/img/thumbails/cinematography_shallow_img00000000.png",
+    "hover": "src/assets/img/hover/cinematography_shallow_hover.png"
+  }
+]

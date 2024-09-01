@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add any global styles here */
+html {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+  --dark: #0f0f0f;
+  --light: #f0f0f0;
+  --sage: #cfcaaa;
+  --metal: #223944;
+  --red: #df0101;
+}
+html::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Unbounded', sans-serif;
+}
+
+
