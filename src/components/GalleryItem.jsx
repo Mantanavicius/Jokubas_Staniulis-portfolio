@@ -1,38 +1,36 @@
-const GalleryItem = ({
-  video,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
-  isHovered,
-}) => {
+import { useState } from "react";
+
+const GalleryItem = ({ video }) => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div
       className="gallery-item relative w-full h-[50vh] overflow-hidden cursor-pointer"
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseOver={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <img
-        src={video.thumbnail}
-        alt="thumbnail"
-        className="w-full h-full object-cover"
-      />
-      {isHovered && video.preview && (
+      {isHovered ? (
         <video
-          src={video.preview}
-          className="absolute inset-0 w-full h-full object-cover"
+          src={"src/assets/img/cinematography/hover/" + video.preview}
+          className=""
           autoPlay
           loop
           muted
         />
+      ) : (
+        <img
+          src={"src/assets/img/cinematography/thumbnails/" + video.thumbnail}
+          alt="thumbnail"
+          className=""
+        />
       )}
-      {isHovered && video.description && (
-        <div className="absolute inset-0 bg-white bg-opacity-50 flex flex-col justify-center p-4 text-black">
-          <h2 className="text-xl font-bold">{video.description.title}</h2>
-          <p className="text-md">{video.description.type}</p>
-          <p className="text-sm">{video.description.team}</p>
-        </div>
-      )}
+
+      <video
+        src={video.preview}
+        className="absolute inset-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+      />
     </div>
   );
 };
