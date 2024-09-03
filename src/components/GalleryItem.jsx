@@ -51,17 +51,17 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
       />
       {/* Dynamic Description Box */}
       <div
-        className={`description absolute top-1/4 text-gray-800 p-8 transition-opacity duration-300 ease-in-out w-full h-fit flex flex-col justify-center gap-4 ${
+        className={`description absolute top-0 text-gray-800 p-4 transition-opacity duration-300 ease-in-out w-full h-fit flex flex-col justify-center gap-4 ${
           isHovered ? "opacity-100 z-20" : "opacity-0 z-[-1]"
         }`}
         style={{
           right: descriptionOnTheRight ? `-100%` : "auto",
-          left: descriptionOnTheRight ? "auto" : `-90%`,
+          left: descriptionOnTheRight ? "auto" : `-100%`,
         }}
       >
-        <h3 className="text-2xl font-unbounded font-black">{video.title}</h3>
-        <p className="text-xl font-unbounded font-extralight">{video.type}</p>
-        <p className="font-shoulders text-red">{video.team}</p>
+        <h3 className="text-xl font-unbounded font-black">{video.title}</h3>
+        <p className="text-l font-unbounded font-extralight">{video.type}</p>
+        <p className="font-shoulders text-md text-red">{video.team}</p>
       </div>
     </div>
   );

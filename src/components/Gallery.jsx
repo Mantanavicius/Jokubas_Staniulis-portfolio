@@ -37,8 +37,7 @@ const Gallery = () => {
 
         {/* Overlay for showing the selected video details */}
         {selectedVideo && (
-          <div className="description-overlay absolute top-0 left-0 bg-white opacity-90 h-full w-full flex flex-col justify-center p-8">
-          </div>
+          <div className="description-overlay absolute top-0 left-0 bg-white opacity-95 h-full w-full flex flex-col justify-center p-8"></div>
         )}
       </div>
     </div>
