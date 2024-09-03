@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
+import.meta.glob("../assets/img/cinematography/hover/*");
+import.meta.glob("../assets/img/cinematography/thumbnails/*");
+import.meta.glob("../assets/img/cinematography/videos/*");
 
 const GalleryItem = ({ video, onHover, onLeave }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -33,17 +36,18 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
     >
       {/* Video element is always loaded but hidden under the thumbnail */}
       <video
-        src={"src/assets/img/cinematography/hover/" + video.preview}
+        src={"/assets/img/cinematography/hover/" + video.preview}
         className={`w-full h-auto rounded-3xl cursor-pointer absolute top-0 left-0 transition-opacity duration-300 ${
           isHovered ? "flex z-20" : "hidden z-0"
         }`}
         loop
         muted
         ref={videoRef}
+        alt={video.title}
       />
       {/* Thumbnail image on top, initially visible */}
       <img
-        src={"src/assets/img/cinematography/thumbnails/" + video.thumbnail}
+        src={"/assets/img/cinematography/thumbnails/" + video.thumbnail}
         alt={video.title}
         className={`w-full h-auto rounded-3xl cursor-pointer transition-opacity duration-300 ${
           isHovered ? "opacity-0" : "opacity-100"
@@ -55,8 +59,8 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
           isHovered ? "opacity-100 z-20" : "opacity-0 z-[-1]"
         }`}
         style={{
-          right: descriptionOnTheRight ? `-100%` : "auto",
-          left: descriptionOnTheRight ? "auto" : `-100%`,
+          right: descriptionOnTheRight ? `-105%` : "auto",
+          left: descriptionOnTheRight ? "auto" : `-95%`,
         }}
       >
         <h3 className="text-xl font-unbounded font-black">{video.title}</h3>

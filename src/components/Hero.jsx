@@ -1,14 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import "./Hero.css"
+import "./Hero.css";
+import.meta.glob("../assets/img/slideshow-desktop/*");
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
-    'bg-[url("../src/assets/img/slideshow-desktop/1.png")]',
-    'bg-[url("../src/assets/img/slideshow-desktop/2.png")]',
-    'bg-[url("../src/assets/img/slideshow-desktop/3.png")]',
-    'bg-[url("../src/assets/img/slideshow-desktop/4.png")]',
+    'bg-[url("/assets/img/slideshow-desktop/1.png")]',
+    'bg-[url("/assets/img/slideshow-desktop/2.png")]',
+    'bg-[url("/assets/img/slideshow-desktop/3.png")]',
+    'bg-[url("/assets/img/slideshow-desktop/4.png")]',
   ];
 
   const turbulenceRef = useRef(null);
