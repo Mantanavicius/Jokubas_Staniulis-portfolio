@@ -13,6 +13,7 @@ export default {
       fontFamily: {
         norman: ["norman-variable", "sans-serif"],
         unbounded: ["Unbounded", "sans-serif"],
+        shoulders: ["Big Shoulders Text", "cursive"],
       },
     },
   },
