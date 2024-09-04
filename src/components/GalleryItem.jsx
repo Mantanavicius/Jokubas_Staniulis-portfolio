@@ -16,10 +16,10 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
 
     // Calculate space available on the left and right
     const rect = videoRef.current.getBoundingClientRect();
-    const spaceLeft = rect.left; // Space to the left of the element
-    const spaceRight = window.innerWidth - rect.right; // Space to the right of the element
+    const spaceLeft = rect.left;
+    const spaceRight = window.innerWidth - rect.right;
 
-    setDescriptionOnTheRight(spaceRight > spaceLeft); // Decide to show description on the side with more space
+    setDescriptionOnTheRight(spaceRight > spaceLeft);
   };
 
   const handleMouseLeave = () => {
@@ -30,22 +30,20 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
 
   return (
     <div
-      className="break-inside-avoid mb-4 relative rounded-lg cursor-pointer"
+      className="break-inside-avoid mb-4 relative"
       onMouseOver={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Video element is always loaded but hidden under the thumbnail */}
       <video
         src={"/assets/img/cinematography/hover/" + video.preview}
         className={`w-full h-auto rounded-3xl cursor-pointer absolute top-0 left-0 transition-opacity duration-300 ${
-          isHovered ? "flex z-20" : "hidden z-0"
+          isHovered ? "opacity-100 z-20" : "opacity-0 z-0"
         }`}
         loop
         muted
         ref={videoRef}
         alt={video.title}
       />
-      {/* Thumbnail image on top, initially visible */}
       <img
         src={"/assets/img/cinematography/thumbnails/" + video.thumbnail}
         alt={video.title}
@@ -53,19 +51,24 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
           isHovered ? "opacity-0" : "opacity-100"
         }`}
       />
-      {/* Dynamic Description Box */}
       <div
-        className={`description absolute top-0 text-gray-800 p-4 transition-opacity duration-300 ease-in-out w-full h-fit flex flex-col justify-center gap-4 ${
-          isHovered ? "opacity-100 z-20" : "opacity-0 z-[-1]"
-        }`}
+        className={`description absolute top-0 text-gray-800 p-[2vw] w-full h-fit flex flex-col justify-center gap-4 transition-all duration-175 ease-in-out`}
         style={{
-          right: descriptionOnTheRight ? `-105%` : "auto",
-          left: descriptionOnTheRight ? "auto" : `-95%`,
+          opacity: isHovered ? 1 : 0,
+          transform: isHovered
+            ? "translateX(0)"
+            : `translateX(${descriptionOnTheRight ? "100%" : "-100%"})`,
+          right: descriptionOnTheRight ? "-100%" : "auto",
+          left: descriptionOnTheRight ? "auto" : "-100%",
+          zIndex: isHovered ? 20 : 10,
+          textAlign: descriptionOnTheRight ? "left" : "right",
         }}
       >
-        <h3 className="text-xl font-unbounded font-black">{video.title}</h3>
-        <p className="text-l font-unbounded font-extralight">{video.type}</p>
-        <p className="font-shoulders text-md text-red">{video.team}</p>
+        <h3 className="text-[2vw] font-unbounded font-black">{video.title}</h3>
+        <p className="text-[1.5vw] font-unbounded font-extralight">
+          {video.type}
+        </p>
+        <p className="font-shoulders text-[1.25vw] text-red">{video.team}</p>
       </div>
     </div>
   );
@@ -73,8 +76,8 @@ const GalleryItem = ({ video, onHover, onLeave }) => {
 
 GalleryItem.propTypes = {
   video: PropTypes.object.isRequired,
-  onHover: PropTypes.func.isRequired, // Correct PropTypes
-  onLeave: PropTypes.func.isRequired, // Correct PropTypes
+  onHover: PropTypes.func.isRequired,
+  onLeave: PropTypes.func.isRequired,
 };
 
 export default GalleryItem;

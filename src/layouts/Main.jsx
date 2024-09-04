@@ -1,11 +1,11 @@
-import Gallery from "../components/Gallery";
 import Hero from "../components/Hero";
+import Works from "../components/Works";
 
 const Main = () => {
   return (
     <main>
       <Hero/>
-      <Gallery/>
+      <Works/>
     </main>
   );
 };
