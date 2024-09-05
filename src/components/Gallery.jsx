@@ -10,18 +10,10 @@ const Gallery = () => {
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
   useEffect(() => {
-    if (selectedVideo) {
-      setIsOverlayVisible(true);
-    } else {
-      const timer = setTimeout(() => setIsOverlayVisible(false), 300); // Match this with your transition duration
-      return () => clearTimeout(timer);
-    }
+    selectedVideo ? setIsOverlayVisible(true) : setIsOverlayVisible(false);
   }, [selectedVideo]);
 
-  const handleMouseEnter = (video) => {
-    if (selectedVideo) return;
-    setSelectedVideo(video);
-  };
+  const handleMouseEnter = (video) => setSelectedVideo(video);
 
   const handleMouseLeave = () => setSelectedVideo(null);
 
