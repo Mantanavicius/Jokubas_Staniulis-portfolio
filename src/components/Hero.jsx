@@ -12,7 +12,7 @@ const Hero = () => {
     'bg-[url("/assets/img/slideshow-desktop/4.png")]',
   ];
 
-  const turbulenceRef = useRef(null);
+  // const turbulenceRef = useRef(null);
   const heroTextRef = useRef(null);
   const heroMenuRef = useRef(null);
   const sectionRef = useRef(null);
@@ -25,84 +25,72 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    const animateTurbulence = () => {
-      if (turbulenceRef.current) {
-        const frequency = 7 + Math.random();
-        turbulenceRef.current.setAttribute(
-          "baseFrequency",
-          `${frequency} ${frequency}`
-        );
-      }
-      requestAnimationFrame(animateTurbulence);
-    };
-    animateTurbulence();
-  }, []);
-
-  useEffect(() => {
     const updateLayout = () => {
-      if (sectionRef.current && heroTextRef.current && heroMenuRef.current) {
-        const parent = sectionRef.current;
-        const heroText = heroTextRef.current;
-        const heroMenu = heroMenuRef.current;
+      const section = sectionRef.current;
+      const heroText = heroTextRef.current;
+      const heroMenu = heroMenuRef.current;
 
-        const parentWidth = parent.offsetWidth;
-        const parentHeight = parent.offsetHeight;
-        const imageAspectRatio = 1920 / 1080;
-        const parentAspectRatio = parentWidth / parentHeight;
+      if (!section || !heroText || !heroMenu) return;
 
-        let renderWidth,
-          renderHeight,
-          offsetX = 0,
-          offsetY = 0;
-        if (parentAspectRatio > imageAspectRatio) {
-          renderWidth = parentWidth;
-          renderHeight = renderWidth / imageAspectRatio;
-          offsetY = (parentHeight - renderHeight) / 2;
-        } else {
-          renderHeight = parentHeight;
-          renderWidth = renderHeight * imageAspectRatio;
-          offsetX = (parentWidth - renderWidth) / 2;
-        }
+      const parentWidth = section.offsetWidth;
+      const parentHeight = section.offsetHeight;
+      const imageAspectRatio = 1920 / 1080;
+      const parentAspectRatio = parentWidth / parentHeight;
 
-        // Hero Text positioning
-        const textWidth = (392 / 1920) * renderWidth;
-        const textHeight = (190 / 1080) * renderHeight;
-        const textLeft = (766 / 1920) * renderWidth + offsetX;
-        const textTop = (430 / 1080) * renderHeight + offsetY;
-
-        heroText.style.width = `${textWidth}px`;
-        heroText.style.height = `${textHeight}px`;
-        heroText.style.left = `${textLeft}px`;
-        heroText.style.top = `${textTop}px`;
-
-        // Hero Menu positioning
-        const menuWidth = (340 / 1920) * renderWidth;
-        const menuHeight = (24 / 1080) * renderHeight;
-        const menuLeft = (791 / 1920) * renderWidth + offsetX;
-        const menuTop = (646 / 1080) * renderHeight + offsetY;
-
-        heroMenu.style.width = `${menuWidth}px`;
-        heroMenu.style.height = `${menuHeight}px`;
-        heroMenu.style.left = `${menuLeft}px`;
-        heroMenu.style.top = `${menuTop}px`;
-
-        // Resize text
-        const heroTextElements = heroText.querySelectorAll("h2");
-        heroTextElements.forEach((element) => {
-          element.style.fontSize = `${textHeight / 1.9}px`;
-        });
-
-        const menuItems = heroMenu.querySelectorAll("a:not(.slash)");
-        const menuSlashes = heroMenu.querySelectorAll(".slash");
-
-        menuItems.forEach((item) => {
-          item.style.fontSize = `${menuHeight / 1.37}px`;
-        });
-
-        menuSlashes.forEach((slash) => {
-          slash.style.fontSize = `${menuHeight / 1.2}px`;
-        });
+      let renderWidth,
+        renderHeight,
+        offsetX = 0,
+        offsetY = 0;
+      if (parentAspectRatio > imageAspectRatio) {
+        renderWidth = parentWidth;
+        renderHeight = renderWidth / imageAspectRatio;
+        offsetY = (parentHeight - renderHeight) / 2;
+      } else {
+        renderHeight = parentHeight;
+        renderWidth = renderHeight * imageAspectRatio;
+        offsetX = (parentWidth - renderWidth) / 2;
       }
+
+      // Hero Text positioning
+      const textWidth = (392 / 1920) * renderWidth;
+      const textHeight = (190 / 1080) * renderHeight;
+      const textLeft = (766 / 1920) * renderWidth + offsetX;
+      const textTop = (430 / 1080) * renderHeight + offsetY;
+
+      heroText.style.width = `${textWidth}px`;
+      heroText.style.height = `${textHeight}px`;
+      heroText.style.left = `${textLeft}px`;
+      heroText.style.top = `${textTop}px`;
+
+      // Hero Menu positioning
+      const menuWidth = (340 / 1920) * renderWidth;
+      const menuFontSize = (16 / 1080) * renderHeight;
+      const menuHeight = 1.5 * menuFontSize;
+      const menuLeft = (791 / 1920) * renderWidth + offsetX;
+      const menuTop = (642.5 / 1080) * renderHeight + offsetY;
+
+      heroMenu.style.width = `${menuWidth}px`;
+      heroMenu.style.height = `${menuHeight}px`;
+      heroMenu.style.left = `${menuLeft}px`;
+      heroMenu.style.top = `${menuTop}px`;
+
+      // Resize text
+      const heroTextElements = heroText.querySelectorAll("h2");
+      heroTextElements.forEach((element) => {
+        element.style.fontSize = `${textHeight / 1.9}px`;
+      });
+
+      const menuItems = heroMenu.querySelectorAll("a:not(.slash)");
+      const menuSlashes = heroMenu.querySelectorAll(".slash");
+
+      menuItems.forEach((item) => {
+        item.style.fontSize = `${menuFontSize}px`;
+      });
+
+      menuSlashes.forEach((slash) => {
+        slash.style.fontSize = `${menuHeight / 1.2}px`;
+        slash.style.lineHeight = `${menuHeight * 0.65}px`;
+      });
     };
 
     updateLayout();
@@ -114,7 +102,7 @@ const Hero = () => {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative h-screen w-full overflow-hidden"
+      className="fixed top-0 left-0 w-full h-screen z-10 overflow-hidden"
     >
       <div className="absolute inset-0">
         {slides.map((slide, index) => (
@@ -126,24 +114,6 @@ const Hero = () => {
           ></div>
         ))}
       </div>
-
-      <svg
-        id="grain"
-        className="absolute inset-0 z-10 mix-blend-overlay w-full h-full pointer-events-none"
-        viewBox="0 0 1000 1000"
-        preserveAspectRatio="none"
-      >
-        <filter id="noiseFilter">
-          <feTurbulence
-            ref={turbulenceRef}
-            type="fractalNoise"
-            baseFrequency="7"
-            numOctaves="6"
-            stitchTiles="stitch"
-          ></feTurbulence>
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
-      </svg>
 
       <div
         ref={heroTextRef}
@@ -162,23 +132,17 @@ const Hero = () => {
       <nav
         ref={heroMenuRef}
         id="hero-menu"
-        className="relative z-20 text-sage mix-blend-difference"
+        className="relative z-20 text-sage mix-blend-difference flex justify-between items-center font-unbounded"
       >
-        <ul className="menu flex justify-between items-center h-full">
-          <li>
-            <Link to="/works">works</Link>
-          </li>
-          <li className="slash">{"//"}</li>
-          <li>
-            <Link to="/showreel" id="showreel">
-              SHOWREEL
-            </Link>
-          </li>
-          <li className="slash">{"//"}</li>
-          <li>
-            <Link to="/about">about</Link>
-          </li>
-        </ul>
+        <Link to="/works">
+          works
+        </Link>
+        <div className="slash font-norman font-bold mt-1.5">{"//"}</div>
+        <Link to="/showreel" id="showreel">
+          SHOWREEL
+        </Link>
+        <div className="slash font-norman font-bold mt-1.5">{"//"}</div>
+        <Link to="/about" className="text-right">about</Link>
       </nav>
     </section>
   );
