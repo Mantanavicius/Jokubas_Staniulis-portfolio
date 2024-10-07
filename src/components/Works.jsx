@@ -1,76 +1,68 @@
 import { useState } from "react";
-import { RowsPhotoAlbum } from "react-photo-album";
-import "react-photo-album/rows.css";
 import cinematography from "../cinematography";
 import colorGrading from "../colorGrading";
-import GalleryItem from "./GalleryItem";
-import Slider from "./Slider";
+import VideoGallery from "./videoGallery";
+import VideoLightbox from "./VideoLightbox";
 
 const Works = () => {
-
   const [openTab, setOpenTab] = useState(1);
+  const [lightbox, setLightbox] = useState({
+    isOpen: false,
+    videoUrl: null,
+    videoData: null,
+  });
+
+  const handleVideoClick = (videoData) => {
+    setLightbox({
+      isOpen: true,
+      videoUrl: videoData.video, // Full video URL for cinematography items
+      videoData,
+    });
+  };
+
+  const closeLightbox = () => {
+    setLightbox({
+      isOpen: false,
+      videoUrl: null,
+      videoData: null,
+    });
+  };
 
   return (
-    <div className="works transition-all duration-200 px-4 pb-4">
-      <header className="menu w-full h-[max(60px,5vw)] flex items-center justify-center text-dark text-[max(14px,1.3vw)]">
+    <div className="works transition-all duration-200 px-4 pb-4 ease-in-out">
+      <header className="menu w-full h-[max(60px,5vw)] flex items-center justify-center text-dark text-[max(16px,1.4vw)]">
         <button
           onClick={() => setOpenTab(1)}
-          className={`${
+          className={`hover:drop-shadow-2xl ${
             openTab === 1 ? "font-bold" : ""
-          } transition-weight duration-200`}
+          } transition-all duration-200`}
         >
           cinematography
         </button>
-        <span className="mx-2">{"//"}</span>
+        <span className="mx-2 text-gray-400">{"//"}</span>
         <button
           onClick={() => setOpenTab(2)}
-          className={`${
+          className={`hover:drop-shadow-2xl ${
             openTab === 2 ? "font-bold" : ""
-          } transition-weight duration-200`}
+          } transition-all duration-200`}
         >
           color grading
         </button>
       </header>
-      <RowsPhotoAlbum
-        photos={openTab === 1 ? cinematography : colorGrading}
-        spacing={15}
-        breakpoints={[768, 1024, 3250]}
-        targetRowHeight={300}
-        rowConstraints={(containerWidth) =>
-          containerWidth > 768 && containerWidth < 3250
-            ? { maxPhotos: 2 }
-            : containerWidth > 768
-            ? { maxPhotos: 3 }
-            : { maxPhotos: 1 }
-        }
-        render={
-          openTab === 1
-            ? //  {
-              //     photo: ({ onClick }, { index, ...props }) => (
-              //       <GalleryItem
-              //         onClick={onClick}
-              //         video={props.photo}
-              //         key={index}
-              //         width={props.photo.width}
-              //         height={props.photo.height}
-              //       />
-              //     ),
-              //   }
-              {
-                image: (props) => <img {...props} className="rounded-3xl opacity-0 relative" />,
-                extras: (_, { photo, index }) => (
-                  <GalleryItem video={photo} index={index} />
-                ),
-              }
-            : 
-            {
-              image: (props) => <img {...props} className="rounded-3xl relative" />,
-              extras: (_, { photo, index }) => (
-                <Slider video={photo} index={index} />
-              ),
-            }
-        }
+
+      <VideoGallery
+        videos={openTab === 1 ? cinematography : colorGrading}
+        tab={openTab}
+        onVideoClick={openTab === 1 ? handleVideoClick : undefined}
       />
+
+      {lightbox.isOpen && (
+        <VideoLightbox
+          videoUrl={lightbox.videoUrl}
+          videoData={lightbox.videoData}
+          onClose={closeLightbox}
+        />
+      )}
     </div>
   );
 };

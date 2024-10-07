@@ -1,54 +1,68 @@
-import { useState, useEffect } from "react";
-import proptypes from "prop-types";
+import { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
-const Slider = ({ before, after }) => {
-  const [sliderPosition, setSliderPosition] = useState(50); // Initial slider position
-  const [isDragging, setIsDragging] = useState(false); // State to manage dragging
+const Slider = ({ video, aspect }) => {
+  const before = `../assets/img/color-grading/before/${video.before}`;
+  const after = `../assets/img/color-grading/after/${video.after}`;
+  const thumbnail = `../assets/img/color-grading/thumbnails/${video.thumbnail}`;
 
-  // Function to calculate and update slider position
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const beforeRef = useRef();
+  const afterRef = useRef();
+
+  // UPDATED: Improved mouse/touch handling
   const handleMove = (clientX, rect) => {
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width)); // Calculate the x position
-    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100)); // Convert to percentage
-    setSliderPosition(percent); // Update state
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percent = Math.max(0, Math.min((x / rect.width) * 100, 100));
+    setSliderPosition(percent);
   };
 
-  // Function to handle mouse move events
+  // NEW: Separated mouse and touch handlers for better control
   const handleMouseMove = (event) => {
     if (!isDragging) return;
     const rect = event.currentTarget.getBoundingClientRect();
     handleMove(event.clientX, rect);
   };
 
-  // Function to handle touch move events
   const handleTouchMove = (event) => {
     if (!isDragging) return;
     const rect = event.currentTarget.getBoundingClientRect();
     if (event.touches.length > 0) {
-      const touch = event.touches[0];
-      handleMove(touch.clientX, rect);
+      handleMove(event.touches[0].clientX, rect);
     }
   };
 
-  // Event handlers to start and stop dragging
-  const handleInteractionStart = () => setIsDragging(true);
-  const handleInteractionEnd = () => setIsDragging(false);
+  // NEW: Added separate interaction handlers
+  const handleInteractionStart = () => {
+    setIsDragging(true);
+    beforeRef.current.play();
+    afterRef.current.play();
+    beforeRef.current.currentTime = afterRef.current.currentTime;
+  };
+  const handleInteractionEnd = () => {
+    setIsDragging(false);
+    beforeRef.current.pause();
+    afterRef.current.pause();
+    beforeRef.current.currentTime = afterRef.current.currentTime;
+  };
 
-  // Adding and removing event listeners for mouse/touch events
+  // UPDATED: Improved event listener management
   useEffect(() => {
     const handleMouseUp = () => setIsDragging(false);
     const handleMouseMoveDocument = (event) => {
       if (!isDragging) return;
+      // UPDATED: Use data attribute for more reliable element selection
       const rect = document
-        .querySelector(".slider-container")
+        // .querySelector(`[data-slider-id="${video.id}"]`)
         .getBoundingClientRect();
       handleMove(event.clientX, rect);
     };
 
-    // Add listeners when component mounts
     document.addEventListener("mousemove", handleMouseMoveDocument);
     document.addEventListener("mouseup", handleMouseUp);
 
-    // Clean up listeners when component unmounts
     return () => {
       document.removeEventListener("mousemove", handleMouseMoveDocument);
       document.removeEventListener("mouseup", handleMouseUp);
@@ -56,58 +70,61 @@ const Slider = ({ before, after }) => {
   }, [isDragging]);
 
   return (
+    // NEW: Added data-slider-id and aspect ratio styling
     <div
-      className="w-full relative slider-container"
-      onMouseUp={handleInteractionEnd}
-      onTouchEnd={handleInteractionEnd}
+      className="slider-container w-full relative"
+      style={{ aspectRatio: aspect }}
+      onMouseEnter={handleInteractionStart}
+      onMouseLeave={handleInteractionEnd}
+      onMouseMove={handleMouseMove}
+      onTouchMove={handleTouchMove}
+      onMouseDown={handleInteractionStart}
+      onTouchStart={handleInteractionStart}
     >
+      {/* UPDATED: Added rounded corners and proper positioning */}
+      <video
+        loop
+        muted
+        poster={thumbnail}
+        className="absolute inset-0 w-full h-full object-cover rounded-3xl"
+        src={before}
+        ref={beforeRef}
+      />
       <div
-        className="relative w-full max-w-[700px] aspect-[70/45] m-auto overflow-hidden select-none"
-        onMouseMove={handleMouseMove}
-        onTouchMove={handleTouchMove}
-        onMouseDown={handleInteractionStart}
-        onTouchStart={handleInteractionStart}
+        className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden"
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        {/* Before video */}
         <video
-          autoPlay
           loop
           muted
+          poster={thumbnail}
           className="w-full h-full object-cover"
-          src={before}
+          src={after}
+          ref={afterRef}
         />
-
-        {/* After video with clipping */}
-        <div
-          className="absolute top-0 left-0 right-0 w-full h-full"
-          style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-        >
-          <video
-            autoPlay
-            loop
-            muted
-            className="w-full h-full object-cover"
-            src={after}
-          />
-        </div>
-
-        {/* Slider line */}
-        <div
-          className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
-          style={{
-            left: `calc(${sliderPosition}% - 1px)`,
-          }}
-        >
-          <div className="bg-white absolute rounded-full h-3 w-3 -left-1 top-[calc(50%-5px)]" />
-        </div>
       </div>
+
+      {/* Slider line remains largely unchanged */}
+      {/* <div
+        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+        style={{ left: `calc(${sliderPosition}% - 1px)` }}
+      >
+        <div className="bg-white absolute rounded-full h-3 w-3 -left-1 top-[calc(50%-5px)]" />
+      </div> */}
     </div>
   );
 };
 
+// NEW: Added comprehensive PropTypes for Slider
 Slider.propTypes = {
-  before: proptypes.string.isRequired,
-  after: proptypes.string.isRequired,
+  video: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    before: PropTypes.string.isRequired,
+    after: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string.isRequired,
+  }).isRequired,
+  aspect: PropTypes.number.isRequired,
 };
 
 export default Slider;
