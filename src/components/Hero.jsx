@@ -134,7 +134,7 @@ const Hero = () => {
         id="hero-menu"
         className="relative z-20 text-sage mix-blend-difference flex justify-between items-center font-unbounded"
       >
-        <Link to="/works">
+        <Link to="#works">
           works
         </Link>
         <div className="slash font-norman font-bold mt-1.5">{"//"}</div>

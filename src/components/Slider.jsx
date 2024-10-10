@@ -12,7 +12,7 @@ const Slider = ({ video, aspect }) => {
   const beforeRef = useRef();
   const afterRef = useRef();
   const descriptionRef = useRef();
-
+  
   const handleMove = (clientX) => {
     if (!containerRef.current) return;
 
@@ -20,8 +20,6 @@ const Slider = ({ video, aspect }) => {
     const position = ((clientX - rect.left) / rect.width) * 100;
     const clampedPosition = Math.max(0, Math.min(position, 100));
     setSliderPosition(clampedPosition);
-    console.log(rect);
-    console.log(window.innerWidth);
   };
 
   const handleMouseMove = (event) => {
@@ -50,9 +48,9 @@ const Slider = ({ video, aspect }) => {
         descriptionRef.current.style.left = "0";
         descriptionRef.current.style.right = "0";
         descriptionRef.current.style.width = `${rect.width}px`;
-        descriptionRef.current.style.height = `${rect.height * 0.9}px`;
+        descriptionRef.current.style.height = `${rect.height * 0.5}px`;
         descriptionRef.current.style.transform = `translateY(-${
-          rect.height * 0.9
+          rect.height * 0.5
         }px`;
       } else if (rect.left > 100) {
         // right
